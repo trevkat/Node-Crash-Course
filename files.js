@@ -16,7 +16,7 @@ fs.writeFile('./docs/test.txt', 'hello, world', () => {
     console.log('file was written');
 });
 
-// directories 
+// directories - The below code will create or delete the assets folders after checking if it exists.
 if (!fs.existsSync('./assets')) {
     fs.mkdir('./assets', (err) => {
         if (err) {
@@ -33,8 +33,15 @@ if (!fs.existsSync('./assets')) {
     })
 }
 
-
-// deleting files
+// deleting files - checks if file exists and then deletes it.
+if (fs.existsSync('./docs/deleteme.txt')) {
+    fs.unlink('./docs/deleteme.txt', (err) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log('file deleted!')    
+    })
+}
 
 
 
