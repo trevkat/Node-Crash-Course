@@ -19,9 +19,9 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/blogs/create'), (req, res) => {
-    res.render();
-};
+app.get('/blogs/create', (req, res) => {
+    res.render('create');
+});
 
 // 404 page
 app.use((req, res) => {
