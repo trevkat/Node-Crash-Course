@@ -2,15 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Express App</title>
+    <title>My Express App | <%= title %></title>
 </head>
 <body>
 
-    <% const name = 'mario' %>
-
     <nav>
         <div class="site-title">
-            <p><%= name %></p>
             <a href="/"><h1>Blog</h1></a>
             <a>My Express App</a>
         </div>
@@ -39,9 +36,18 @@
 
     <div class="blogs content">
 
-
         <h2>All Blogs</h2>
-        
+
+        <% if (blogs.length > 0) { %>
+            <% blogs.forEach(blog => { %>
+
+                <h3 class="title"><%= blog.title %></h3>
+                <p class="snippet"><%= blog.snippet %></p>
+                
+            <% }) %>
+        <% } else { %>
+            <p>There are no blogs to display...</p>
+        <% } %>
     </div>
 
 </body>
