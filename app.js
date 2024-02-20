@@ -38,18 +38,3 @@ app.use((req, res) => {
     res.status(404).render('404', { title: '404' });
 });
 
-app.get('/person', (req, res) => {
-    res.json({
-       name: 'paddy'
-    });
-});
-
-// post request
-app.post('/person', jsonParser, (req, res) => {
-    console.log(req.body.name)
-    res.json({
-       name: req.body.name
-    });
-});
-
-
