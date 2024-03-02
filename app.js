@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 // express app
 const app = express();
@@ -15,19 +16,23 @@ app.set('view engine', 'ejs');
 // listen for requests
 app.listen(3000);
 
-// next function allows the code to proceed here. Page will hang and fail to load without next
-app.use((req, res, next) => {
-    console.log('new request made:');
-    console.log('host: ', req.hostname);
-    console.log('path: ', req.path);
-    console.log('method: ', req.method);
-    next();
-});
+app.use(morgan('dev'));
 
-app.use((req, res, next) => {
-    console.log('in the next middleware');
-    next();
-});
+// next function allows the code to proceed here. Page will hang and fail to load without next
+// commenting out due to using Morgan NPM package which does this better
+// app.use((req, res, next) => {
+//     console.log('new request made:');
+//     console.log('host: ', req.hostname);
+//     console.log('path: ', req.path);
+//     console.log('method: ', req.method);
+//     next();
+// });
+
+// also commenting out this due to using Morgan NPM package which does this better
+// app.use((req, res, next) => {
+//     console.log('in the next middleware');
+//     next();
+// });
 
 // passing data into views by passing { title: 'Home' }
 app.get('/', (req, res) => {
