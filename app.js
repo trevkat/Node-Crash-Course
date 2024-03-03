@@ -1,20 +1,28 @@
 // Compare this to the old code in server_part_one, two, & three. This is more elegant and easier to use with less code. 
 
 const express = require('express');
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+
 
 // express app
 const app = express();
 
+// connect to MongoDB
+const dbURI = 'mongodb+srv://trevkat:Starcraft1!@nodetest.o2fqkai.mongodb.net/nodetest?retryWrites=true&w=majority&appName=nodetest';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
+
 // create application/json parser
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json();
 
 // register view engine
 app.set('view engine', 'ejs');
 
 // listen for requests
-app.listen(3000);
+// app.listen(3000);
 
 // middleware & static files
 app.use(express.static('public'));
