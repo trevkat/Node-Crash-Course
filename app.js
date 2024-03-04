@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const Blog = require('./models/blog');
 
 
 // express app
@@ -11,7 +12,7 @@ const app = express();
 
 // connect to MongoDB
 const dbURI = 'mongodb+srv://trevkat:Starcraft1!@nodetest.o2fqkai.mongodb.net/nodetest?retryWrites=true&w=majority&appName=nodetest';
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbURI) // (dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => app.listen(3000))
     .catch((err) => console.log(err));
 
@@ -27,6 +28,43 @@ app.set('view engine', 'ejs');
 // middleware & static files
 app.use(express.static('public'));
 app.use(morgan('dev'));
+
+// mongoose and mongo sandbox routes
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog({
+        title: 'new blog 2',
+        snippet: 'about my new blog',
+        body: 'more info about my new blog'
+    });
+
+    blog.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+});
+
+app.get('/all-blogs', (req, res) => {
+    Blog.find()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+app.get('/single-blog', (req, res) => {
+    Blog.findById('65e5de1702044d0d5d5e6ae3')
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+})
 
 // next function allows the code to proceed here. Page will hang and fail to load without next
 // commenting out due to using Morgan NPM package which does this better
