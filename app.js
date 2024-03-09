@@ -116,6 +116,12 @@ app.post('/blogs', (req, res) => {
     })
 })
 
+// Render form for creating a new blog post
+app.get('/blogs/create', (req, res) => {
+    res.render('create', { title: 'Create' });
+});
+
+// Render details of a single blog post
 app.get('/blogs/:id', (req, res) => {
     const id = req.params.id;
     Blog.findById(id)
@@ -125,11 +131,19 @@ app.get('/blogs/:id', (req, res) => {
         .catch(err =>{
             console.log(err);
         })
-})
-
-app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'Create' });
 });
+
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+    .then(result => {
+        res.json({ redirect: '/blogs' });
+    })
+    .catch(err => {
+        console.log(err);
+    })
+})
 
 // 404 page - has to be at the bottom since requests run from top to bottom 
 app.use((req, res) => {
